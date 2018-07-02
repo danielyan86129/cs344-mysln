@@ -111,19 +111,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1.dir/rule:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f CMakeFiles/Makefile2 "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/rule"
-.PHONY : Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1.dir/rule
+Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1_bin.dir/rule:
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f CMakeFiles/Makefile2 "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/rule"
+.PHONY : Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1_bin.dir/rule
 
 # Convenience name for target.
-HW1: Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1.dir/rule
+HW1_bin: Problem\ Sets/Problem\ Set\ 1/CMakeFiles/HW1_bin.dir/rule
 
-.PHONY : HW1
+.PHONY : HW1_bin
 
 # fast build rule for target.
-HW1/fast:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build"
-.PHONY : HW1/fast
+HW1_bin/fast:
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build"
+.PHONY : HW1_bin/fast
 
 compare.o: compare.cpp.o
 
@@ -131,7 +131,7 @@ compare.o: compare.cpp.o
 
 # target to build an object file
 compare.cpp.o:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/compare.cpp.o"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/compare.cpp.o"
 .PHONY : compare.cpp.o
 
 compare.i: compare.cpp.i
@@ -140,7 +140,7 @@ compare.i: compare.cpp.i
 
 # target to preprocess a source file
 compare.cpp.i:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/compare.cpp.i"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/compare.cpp.i"
 .PHONY : compare.cpp.i
 
 compare.s: compare.cpp.s
@@ -149,7 +149,7 @@ compare.s: compare.cpp.s
 
 # target to generate assembly for a file
 compare.cpp.s:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/compare.cpp.s"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/compare.cpp.s"
 .PHONY : compare.cpp.s
 
 main.o: main.cpp.o
@@ -158,7 +158,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/main.cpp.o"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/main.cpp.o"
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -167,7 +167,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/main.cpp.i"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/main.cpp.i"
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -176,7 +176,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/main.cpp.s"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/main.cpp.s"
 .PHONY : main.cpp.s
 
 reference_calc.o: reference_calc.cpp.o
@@ -185,7 +185,7 @@ reference_calc.o: reference_calc.cpp.o
 
 # target to build an object file
 reference_calc.cpp.o:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/reference_calc.cpp.o"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/reference_calc.cpp.o"
 .PHONY : reference_calc.cpp.o
 
 reference_calc.i: reference_calc.cpp.i
@@ -194,7 +194,7 @@ reference_calc.i: reference_calc.cpp.i
 
 # target to preprocess a source file
 reference_calc.cpp.i:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/reference_calc.cpp.i"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/reference_calc.cpp.i"
 .PHONY : reference_calc.cpp.i
 
 reference_calc.s: reference_calc.cpp.s
@@ -203,7 +203,7 @@ reference_calc.s: reference_calc.cpp.s
 
 # target to generate assembly for a file
 reference_calc.cpp.s:
-	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1.dir/reference_calc.cpp.s"
+	cd /Users/adobe/proj/cs344 && $(MAKE) -f "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/build.make" "Problem Sets/Problem Set 1/CMakeFiles/HW1_bin.dir/reference_calc.cpp.s"
 .PHONY : reference_calc.cpp.s
 
 # Help Target
@@ -214,7 +214,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... HW1"
+	@echo "... HW1_bin"
 	@echo "... compare.o"
 	@echo "... compare.i"
 	@echo "... compare.s"
