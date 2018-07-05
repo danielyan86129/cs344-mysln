@@ -54,6 +54,9 @@ __global__ void use_shared_memory_GPU(float *array)
     // other thread blocks, if any)
     if (array[index] > average) { array[index] = average; }
 
+    // this sync is important to ensure all threads' are done using sh_arr
+    // without it the following writes to sh_arr will affect other threads reads
+    __syncthreads();
     // the following code has NO EFFECT: it modifies shared memory, but 
     // the resulting modified data is never copied back to global memory
     // and vanishes when the thread block completes
