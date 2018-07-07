@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "gputimer.h"
 
-#define NUM_THREADS 1000000
+#define NUM_THREADS 10000000
 #define ARRAY_SIZE  100
 
 #define BLOCK_WIDTH 1000

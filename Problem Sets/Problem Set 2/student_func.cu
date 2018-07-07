@@ -122,6 +122,10 @@ void gaussian_blur(const unsigned char* const inputChannel,
   // {
   //     return;
   // }
+  int x = blockDim.x * blockIdx.x + threadIdx.x;
+  int y = blockDim.y * blockIdx.y + threadIdx.y;
+  if ( x > numCols - 1 || y > numRows - 1 )
+    return;
   
   // NOTE: If a thread's absolute position 2D position is within the image, but some of
   // its neighbors are outside the image, then you will need to be extra careful. Instead
@@ -129,6 +133,30 @@ void gaussian_blur(const unsigned char* const inputChannel,
   // the value is out of bounds), you should explicitly clamp the neighbor values you read
   // to be within the bounds of the image. If this is not clear to you, then please refer
   // to sequential reference solution for the exact clamping semantics you should follow.
+
+  // following only works properly if filter width is of odd num of pixels
+  int nb_x, nb_y;
+  int filter_hw = filterWidth / 2;
+  int idx_filter, idx_img;
+  float blended = 0.0f;
+  for (int i = -filter_hw; i <= filter_hw; ++i)
+  {
+    for (int j = -filter_hw; j <= filter_hw; ++j)
+    {
+      // locate the nb pixel in image space
+      nb_x = x + i; nb_y = y + j;
+      // ensure it's clamped within bounds
+      nb_x = min(max(nb_x, 0), numCols - 1);
+      nb_y = min(max(nb_y, 0), numRows - 1);
+      idx_img = nb_y * numCols + nb_x;
+      // locate the coords in filter space
+      idx_filter = (j + filter_hw) * filterWidth + (i + filter_hw);
+      // blend with weight
+      blended += filter[idx_filter] * inputChannel[idx_img];
+    }
+  }
+  // then, write out blended result. Note: do not need sync.
+  outputChannel[y * numCols + x] = blended;
 }
 
 //This kernel takes in an image represented as a uchar4 and splits
@@ -152,6 +180,16 @@ void separateChannels(const uchar4* const inputImageRGBA,
   // {
   //     return;
   // }
+  int x = blockDim.x * blockIdx.x + threadIdx.x;
+  int y = blockDim.y * blockIdx.y + threadIdx.y;
+  if ( x > numCols - 1 || y > numRows - 1 )
+    return;
+
+  int i = y * numCols + x;
+  uchar4 pix = inputImageRGBA[i];
+  redChannel[i] = pix.x;
+  greenChannel[i] = pix.y;
+  blueChannel[i] = pix.z;
 }
 
 //This kernel takes in three color channels and recombines them
@@ -205,12 +243,15 @@ void allocateMemoryAndCopyToGPU(const size_t numRowsImage, const size_t numColsI
   //be sure to use checkCudaErrors like the above examples to
   //be able to tell if anything goes wrong
   //IMPORTANT: Notice that we pass a pointer to a pointer to cudaMalloc
+  checkCudaErrors( cudaMalloc(&d_filter, sizeof(float) * filterWidth * filterWidth) );
 
   //TODO:
   //Copy the filter on the host (h_filter) to the memory you just allocated
   //on the GPU.  cudaMemcpy(dst, src, numBytes, cudaMemcpyHostToDevice);
   //Remember to use checkCudaErrors!
-
+  checkCudaErrors( cudaMemcpy(d_filter, h_filter, 
+                              sizeof(float) * filterWidth * filterWidth, 
+                              cudaMemcpyHostToDevice));
 }
 
 void your_gaussian_blur(const uchar4 * const h_inputImageRGBA, uchar4 * const d_inputImageRGBA,
@@ -220,21 +261,38 @@ void your_gaussian_blur(const uchar4 * const h_inputImageRGBA, uchar4 * const d_
                         unsigned char *d_blueBlurred,
                         const int filterWidth)
 {
+  const int block_w = 32;
   //TODO: Set reasonable block size (i.e., number of threads per block)
-  const dim3 blockSize;
+  const dim3 blockSize(block_w, block_w, 1);
 
   //TODO:
   //Compute correct grid size (i.e., number of blocks per kernel launch)
   //from the image size and and block size.
-  const dim3 gridSize;
+  int grid_x_dim = (numCols + block_w - 1) / block_w;
+  int grid_y_dim = (numRows + block_w - 1) / block_w;
+  const dim3 gridSize(grid_x_dim, grid_y_dim, 1);
 
   //TODO: Launch a kernel for separating the RGBA image into different color channels
+  separateChannels<<<gridSize, blockSize>>>(d_inputImageRGBA, 
+                                            numRows, numCols,
+                                            d_red, d_green, d_blue);
+  std::cout << "separating channels ..." << std::endl;
 
   // Call cudaDeviceSynchronize(), then call checkCudaErrors() immediately after
   // launching your kernel to make sure that you didn't make any mistakes.
   cudaDeviceSynchronize(); checkCudaErrors(cudaGetLastError());
 
   //TODO: Call your convolution kernel here 3 times, once for each color channel.
+  // gaussian_blur(const unsigned char* const inputChannel,
+  //                  unsigned char* const outputChannel,
+  //                  int numRows, int numCols,
+  //                  const float* const filter, const int filterWidth)
+  gaussian_blur<<<gridSize, blockSize>>>( d_red, d_redBlurred, numRows, numCols, 
+                                          d_filter, filterWidth );
+  gaussian_blur<<<gridSize, blockSize>>>( d_green, d_greenBlurred, numRows, numCols, 
+                                          d_filter, filterWidth );
+  gaussian_blur<<<gridSize, blockSize>>>( d_blue, d_blueBlurred, numRows, numCols, 
+                                          d_filter, filterWidth );
 
   // Again, call cudaDeviceSynchronize(), then call checkCudaErrors() immediately after
   // launching your kernel to make sure that you didn't make any mistakes.
@@ -261,4 +319,5 @@ void cleanup() {
   checkCudaErrors(cudaFree(d_red));
   checkCudaErrors(cudaFree(d_green));
   checkCudaErrors(cudaFree(d_blue));
+  checkCudaErrors(cudaFree(d_filter));
 }
